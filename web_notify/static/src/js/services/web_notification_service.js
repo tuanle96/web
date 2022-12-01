@@ -1,19 +1,19 @@
 /** @odoo-module **/
-import { loadJS } from "@web/core/assets";
-import { registry } from "@web/core/registry";
+import {loadJS} from "@web/core/assets";
+import {registry} from "@web/core/registry";
 import core from "web.core";
 
 export const WebNotificationService = {
     dependencies: ["bus_service", "action", "notification", "rpc"],
 
-    async start(env, { action, bus_service, notification }) {
+    async start(env, {action, bus_service, notification}) {
         await loadJS("https://unpkg.com/sweetalert/dist/sweetalert.min.js");
         core.bus.on("web_client_ready", null, async () => {
             bus_service.addEventListener("notification", onNotification.bind(this));
         });
 
-        function onNotification({ detail: notifications }) {
-            for (const { payload, type } of notifications) {
+        function onNotification({detail: notifications}) {
+            for (const {payload, type} of notifications) {
                 if (type === "web_notify_channel") {
                     displayWebNotification(payload);
                 }
@@ -50,7 +50,7 @@ export const WebNotificationService = {
                         let params = {
                             name: button.name,
                             primary: button.primary,
-                            onClick: () => { },
+                            onClick: () => {},
                         };
 
                         if (button.action) {
